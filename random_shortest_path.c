@@ -7,13 +7,23 @@
 #define NUM_CHILDREN 100
 #define RANDOM_SEED 42
 #define INITIAL_MUTATION_RATE 1
+#define SUB_PATH_SIZE 5             // vale no maximo NUM_NODES/2
+#define SUB_PATH_INITIAL_POSITION 2 // vale de 0 a NUM_NODES/2
+
+typedef struct
+{
+    int index;
+    int score;
+    int accumulatedScore;
+} Score;
 
 int child[NUM_NODES];
 int population[NUM_CHILDREN][NUM_NODES];
-int scores[NUM_CHILDREN];
+Score scores[NUM_CHILDREN];
 int occupied[NUM_NODES];
-int bestOfAll[NUM_NODES]; // fodelona
-int bestOfAll[NUM_NODES]; // genocidio
+int seletedParent[NUM_NODES]; // fodelona
+int bestOfAll[NUM_NODES];     // fodelona
+int worstOfAll[NUM_NODES];    // genocidio
 int bestScore = INT_MAX;
 int bestOfAllIndex;
 int worstOfAllIndex;
@@ -22,14 +32,14 @@ int mutationRate = INITIAL_MUTATION_RATE;
 
 void elitism();
 void tournament();
-void roulette();
+// void roulette();
 void predation();
 void genocide();
 void evaluate();
 void emptyOccupied();
-void crossover1(int *parentA, int *parentB, int *child);
-void crossover2(int *parentA, int *parentB, int *child);
-void crossover3(int *parentA, int *parentB, int *child);
+void alternatingPositionsCrossover(int *parentA, int *parentB, int *child);
+void maximalPreservativeCrossover(int *parentA, int *parentB, int *child);
+void adaptedPositionBasedCrossover(int *parentA, int *parentB, int *child);
 void crossover4(int *parentA, int *parentB, int *child);
 void mutation1(int *child);
 void createRandomPath(int *path);
@@ -40,6 +50,8 @@ void printArray(int *array);
 int getDistance(int A, int B);
 int calculateTotalDistance(int *array);
 void printPopulation();
+// void mergeSortScores();
+// int calculateAccumulatedScores();
 
 int main()
 {
@@ -77,22 +89,29 @@ void elitism()
 
 void tournament()
 {
-    int randomIndex1, randomIndex2, parentAIndex, parentBIndex;
-    for (int i = 0; i < NUM_CHILDREN; i++)
-    {
-        randomIndex1 = rand() % NUM_CHILDREN;
-        randomIndex2 = rand() % NUM_CHILDREN;
-        parentAIndex = scores[randomIndex1] < scores[randomIndex2] ? randomIndex1 : randomIndex2;
-
-        randomIndex1 = rand() % NUM_CHILDREN;
-        randomIndex2 = rand() % NUM_CHILDREN;
-        parentBIndex = scores[randomIndex1] < scores[randomIndex2] ? randomIndex1 : randomIndex2;
-    } // PAREI AQUI
+    int randomIndex1, randomIndex2, parentIndex;
+    randomIndex1 = rand() % NUM_CHILDREN;
+    randomIndex2 = rand() % NUM_CHILDREN;
+    parentIndex = scores[randomIndex1].score < scores[randomIndex2].score ? randomIndex1 : randomIndex2;
+    copyArray(population[parentIndex], seletedParent);
 }
 
-void roulette()
-{
-}
+// void roulette()
+// {
+//     mergeSortScores();
+//     int biggestAccumulatedScore = calculateAccumulatedScores();
+//     int targetScore = rand() % biggestAccumulatedScore;
+//     for (int i = 0; i < NUM_CHILDREN; i++)
+//     {
+//         if (targetScore < scores[i].accumulatedScore)
+//         {
+//             crossover(population[i], population[scores[i].index], child);
+//             mutation(child);
+//             copyArray(child, population[i]);
+//             break;
+//         }
+//     }
+// }
 
 void predation()
 {
@@ -147,8 +166,8 @@ void evaluate()
     for (int i = 0; i < NUM_CHILDREN; i++)
     {
         totalDistance = calculateTotalDistance(population[i]);
-        // printf("----%d\n", totalDistance);
-        scores[i] = totalDistance;
+        scores[i].index = i;
+        scores[i].score = totalDistance;
         if (totalDistance < bestScore)
         {
             bestScore = totalDistance;
@@ -166,7 +185,7 @@ void emptyOccupied()
     }
 }
 
-void crossover1(int *parentA, int *parentB, int *child)
+void alternatingPositionsCrossover(int *parentA, int *parentB, int *child)
 {
     emptyOccupied();
     int counter = 0;
@@ -187,6 +206,34 @@ void crossover1(int *parentA, int *parentB, int *child)
     }
 }
 
+void maximalPreservativeCrossover(int *parentA, int *parentB, int *child)
+{
+    emptyOccupied();
+    for (int i = SUB_PATH_INITIAL_POSITION; i < SUB_PATH_SIZE; i++)
+    {
+        occupied[parentA[i]] = 1;
+        child[i - SUB_PATH_INITIAL_POSITION] = parentA[i];
+    }
+    for (int i = SUB_PATH_SIZE; i < NUM_NODES; i++)
+    {
+        if (occupied[parentB[i]] == 0)
+        {
+            child[i] = parentB[i];
+            occupied[parentB[i]] = 1;
+        }
+    }
+}
+
+void adaptedPositionBasedCrossover(int *parentA, int *parentB, int *child)
+{
+    emptyOccupied();
+    int counter = 0;
+    for (int i = 0; i < NUM_NODES; i++)
+    {
+        // PAREI AQUI
+    }
+}
+
 void mutation1(int *child)
 {
     for (int i = 0; i < mutationRate; i++)
@@ -197,10 +244,6 @@ void mutation1(int *child)
         child[randomIndex1] = child[randomIndex2];
         child[randomIndex2] = temp;
     }
-}
-
-void genocide(int i) {
-    shuffle(population[i]);
 }
 
 void createRandomPath(int *path)
@@ -256,3 +299,31 @@ void copyArray(int *source, int *destination)
         destination[i] = source[i];
     }
 }
+
+// void mergeSortScores()
+// {
+//     int i, j, k;
+//     Score temp;
+//     for (i = 1; i < NUM_CHILDREN; i++)
+//     {
+//         temp = scores[i];
+//         j = i - 1;
+//         while (j >= 0 && scores[j].score < temp.score)
+//         {
+//             scores[j + 1] = scores[j];
+//             j = j - 1;
+//         }
+//         scores[j + 1] = temp;
+//     }
+// }
+
+// int calculateAccumulatedScores()
+// {
+//     int total = 0;
+//     for (int i = 0; i < NUM_CHILDREN; i++)
+//     {
+//         total += scores[i].score;
+//         scores[i].accumulatedScore = total;
+//     }
+//     return total;
+// }
