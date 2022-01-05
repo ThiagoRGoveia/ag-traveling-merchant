@@ -6,21 +6,32 @@
 #define NUM_NODES 20
 #define NUM_CHILDREN 100
 #define RANDOM_SEED 42
-#define MUTATION_RATE 2
+#define INITIAL_MUTATION_RATE 1
 
 int child[NUM_NODES];
 int population[NUM_CHILDREN][NUM_NODES];
+int scores[NUM_CHILDREN];
 int occupied[NUM_NODES];
-int bestOfAll[NUM_NODES]; //fodelona
+int bestOfAll[NUM_NODES]; // fodelona
+int bestOfAll[NUM_NODES]; // genocidio
 int bestScore = INT_MAX;
-int bestofAllIndex;
+int bestOfAllIndex;
+int worstOfAllIndex;
 int seedPath[NUM_NODES] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19};
+int mutationRate = INITIAL_MUTATION_RATE;
 
 void elitism();
+void tournament();
+void roulette();
+void predation();
+void genocide();
 void evaluate();
 void emptyOccupied();
-void crossover(int *parentA, int *parentB, int *child);
-void mutation();
+void crossover1(int *parentA, int *parentB, int *child);
+void crossover2(int *parentA, int *parentB, int *child);
+void crossover3(int *parentA, int *parentB, int *child);
+void crossover4(int *parentA, int *parentB, int *child);
+void mutation1(int *child);
 void createRandomPath(int *path);
 void populate();
 void shuffle(int *array);
@@ -33,7 +44,8 @@ void printPopulation();
 int main()
 {
     populate();
-    while (1) {
+    while (1)
+    {
         evaluate();
         elitism();
         // printPopulation();
@@ -43,7 +55,8 @@ int main()
 
 void printPopulation()
 {
-    for (int i = 0; i < NUM_CHILDREN; i++) {
+    for (int i = 0; i < NUM_CHILDREN; i++)
+    {
         printArray(population[i]);
     }
 }
@@ -53,11 +66,54 @@ void elitism()
     int bestScoreIndex = 0;
     for (int i = 0; i < NUM_CHILDREN; i++)
     {
-        if (i != bestofAllIndex) {
-            crossover(population[i], population[bestofAllIndex], child);
-            mutation();
+        if (i != bestOfAllIndex)
+        {
+            crossover(population[i], population[bestOfAllIndex], child);
+            mutation(child);
             copyArray(child, population[i]);
         }
+    }
+}
+
+void tournament()
+{
+    int randomIndex1, randomIndex2, parentAIndex, parentBIndex;
+    for (int i = 0; i < NUM_CHILDREN; i++)
+    {
+        randomIndex1 = rand() % NUM_CHILDREN;
+        randomIndex2 = rand() % NUM_CHILDREN;
+        parentAIndex = scores[randomIndex1] < scores[randomIndex2] ? randomIndex1 : randomIndex2;
+
+        randomIndex1 = rand() % NUM_CHILDREN;
+        randomIndex2 = rand() % NUM_CHILDREN;
+        parentBIndex = scores[randomIndex1] < scores[randomIndex2] ? randomIndex1 : randomIndex2;
+    } // PAREI AQUI
+}
+
+void roulette()
+{
+}
+
+void predation()
+{
+    int worstOfAllIndex = 0;
+    int worstScore = INT_MIN;
+    for (int i = 0; i < NUM_CHILDREN; i++)
+    {
+        if (scores[i] > worstScore)
+        {
+            worstScore = scores[i];
+            worstOfAllIndex = i;
+        }
+    }
+    shuffle(population[worstOfAllIndex]);
+}
+
+void genocide()
+{
+    for (int i = 0; i < NUM_CHILDREN; i++)
+    {
+        shuffle(population[i]);
     }
 }
 
@@ -92,11 +148,12 @@ void evaluate()
     {
         totalDistance = calculateTotalDistance(population[i]);
         // printf("----%d\n", totalDistance);
+        scores[i] = totalDistance;
         if (totalDistance < bestScore)
         {
             bestScore = totalDistance;
             copyArray(population[i], bestOfAll);
-            bestofAllIndex = i;
+            bestOfAllIndex = i;
         }
     }
 }
@@ -109,7 +166,7 @@ void emptyOccupied()
     }
 }
 
-void crossover(int *parentA, int *parentB, int *child)
+void crossover1(int *parentA, int *parentB, int *child)
 {
     emptyOccupied();
     int counter = 0;
@@ -130,8 +187,10 @@ void crossover(int *parentA, int *parentB, int *child)
     }
 }
 
-void mutation() {
-    for (int i = 0; i < MUTATION_RATE; i++) {
+void mutation1(int *child)
+{
+    for (int i = 0; i < mutationRate; i++)
+    {
         int randomIndex1 = rand() % NUM_NODES;
         int randomIndex2 = rand() % NUM_NODES;
         int temp = child[randomIndex1];
