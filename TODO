@@ -1,6 +1,6 @@
+- Traduzir shortestPathValue para c
 - Fazer código para ler grafo do arquivo
 - Fazer código apra aplicar o dijkstra e salvar grafos resultantes na memoria
 - Fazer código para salvar fitness dos dois ags nos arquivos (salvar vertor do segundo ag)
 - Fazer código de parada (usar threads)
 - Fazer segundo ag
-- Traduzir shortestPathValue para c++
