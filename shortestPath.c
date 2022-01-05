@@ -24,11 +24,17 @@ int minDistance(int dist[], bool sptSet[])
 }
 
 // A utility function to print the constructed distance array
-void printSolution(int dist[])
+void printSolution(int dist[], int path[V][V])
 {
     printf("Vertex \t\t Distance from Source\n");
     for (int i = 0; i < V; i++)
         printf("%d \t\t %d\n", i, dist[i]);
+    for (int i = 0; i < V; i++) {
+        for(int j = 0; j < V; j++)
+            printf("%d ", path[i][j]);
+        printf("\n");
+    }
+
 }
 
 // Function that implements Dijkstra's single source shortest path algorithm
@@ -37,7 +43,7 @@ void dijkstra(int graph[V][V], int src)
 {
     int dist[V]; // The output array.  dist[i] will hold the shortest
     // distance from src to i
-
+    int path[V][V];
     bool sptSet[V]; // sptSet[i] will be true if vertex i is included in shortest
     // path tree or shortest distance from src to i is finalized
 
@@ -53,7 +59,6 @@ void dijkstra(int graph[V][V], int src)
         // Pick the minimum distance vertex from the set of vertices not
         // yet processed. u is always equal to src in the first iteration.
         int u = minDistance(dist, sptSet);
-
         // Mark the picked vertex as processed
         sptSet[u] = true;
 
@@ -64,12 +69,14 @@ void dijkstra(int graph[V][V], int src)
             // u to v, and total weight of path from src to  v through u is
             // smaller than current value of dist[v]
             if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX
-                && dist[u] + graph[u][v] < dist[v])
-                dist[v] = dist[u] + graph[u][v];
+                && dist[u] + graph[u][v] < dist[v]) {
+                    dist[v] = dist[u] + graph[u][v];
+                    // path[v]
+                }
     }
 
     // print the constructed distance array
-    printSolution(dist);
+    printSolution(dist, path);
 }
 
 // driver program to test above function

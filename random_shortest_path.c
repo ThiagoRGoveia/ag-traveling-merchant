@@ -140,6 +140,10 @@ void mutation() {
     }
 }
 
+void genocide(int i) {
+    shuffle(population[i]);
+}
+
 void createRandomPath(int *path)
 {
     int found;
