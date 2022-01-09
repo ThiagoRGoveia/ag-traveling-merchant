@@ -1,6 +1,6 @@
 #include "Includes.h"
 
-int kingAg[10] = {0, 1, 1, 0, 0, 1, 0, 0, 1, 0};
+int kingAg[11] = {0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0};
 
 int adaptedPositionBasedCrossover_numberOfPositions = 1;
 int displacementMutation_subPathSize = 1;
@@ -31,7 +31,7 @@ void checkPropertyMutation(int gene)
     }
 }
 
-void mutate_kingAg()
+void mutateKingAg()
 {
     int gene;
     // mutate first phenotype
@@ -41,36 +41,59 @@ void mutate_kingAg()
 
     // mutate second phenotype
     gene = rand() % 4 + 2;
-    if (gene = 5)
-    {
-        for (int i = 2; i < 4; i++)
-            kingAg[i] = 0;
-    }
+    // printf("mutateKingAg: %d\n", gene);
+
     kingAg[gene] = 1;
     checkPropertyMutation(gene);
-    for (int i = 2; i < 5; i++)
+    for (int i = 2; i < 6; i++)
     {
         if (i != gene)
             kingAg[i] = 0;
     }
 
     // mutate third phenotype
-    gene = rand() % 4 + 5;
-    if (gene = 8)
-    {
-        for (int i = 4; i < 7; i++)
-            kingAg[i] = 0;
-    }
+    gene = rand() % 3 + 6;
     kingAg[gene] = 1;
     checkPropertyMutation(gene);
-    for (int i = 4; i < 7; i++)
+    for (int i = 6; i < 9; i++)
     {
         if (i != gene)
             kingAg[i] = 0;
     }
 
     // mutate fourth phenotype
-    gene = rand() % 2 + 8;
+    gene = rand() % 2 + 9;
     kingAg[gene] = 1;
-    kingAg[abs(gene - 9)] = 0;
+    kingAg[abs(gene - 19)] = 0;
+}
+
+void printArray(int *array)
+{
+    printf("%d ", kingAg[0]);
+    printf("%d ", kingAg[1]);
+    printf("| ");
+    printf("%d ", kingAg[2]);
+    printf("%d ", kingAg[3]);
+    printf("%d ", kingAg[4]);
+    printf("%d ", kingAg[5]);
+    printf("| ");
+    printf("%d ", kingAg[6]);
+    printf("%d ", kingAg[7]);
+    printf("%d ", kingAg[8]);
+    printf("| ");
+    printf("%d ", kingAg[9]);
+    printf("%d ", kingAg[10]);
+    printf("\n");
+}
+
+int main(int argc, char const *argv[])
+{
+    srand(42);
+    printArray(kingAg);
+    int i = 0;
+    while (i++ < 1000)
+    {
+        mutateKingAg();
+        printArray(kingAg);
+    }
 }

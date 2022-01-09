@@ -16,6 +16,5 @@ extern int seedPath[NUM_NODES];
 extern int positionsArray[NUM_NODES];
 extern int graph[NUM_NODES][NUM_NODES];
 extern int completeGraph[NUM_NODES][NUM_NODES];
-extern int kingAg[NUMBER_OF_KING_AG_GENES];
 
 #endif

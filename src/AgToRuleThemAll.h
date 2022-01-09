@@ -18,9 +18,9 @@
 
 #define MAX_MUTATION (NUM_NODES / 2)
 
-extern int adaptedPositionBasedCrossover_numberOfPositions = 1;
-extern int displacementMutation_subPathSize = 1;
-extern int exchangeMutation_numberOfMutations = 1;
-extern int insertionMutation_numberOfMutations = 1;
+extern int adaptedPositionBasedCrossover_numberOfPositions;
+extern int displacementMutation_subPathSize;
+extern int exchangeMutation_numberOfMutations;
+extern int insertionMutation_numberOfMutations;
 
 #endif

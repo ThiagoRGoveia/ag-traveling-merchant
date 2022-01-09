@@ -19,5 +19,6 @@
 #include "ExchangeMutation.h"
 #include "DisplacementMutation.h"
 #include "InsertionMutation.h"
+#include "NoCrossover.h"
 
 #endif
