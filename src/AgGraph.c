@@ -69,17 +69,20 @@ void evolve(Gene *queenAg, int generationBestIndex)
 
 int evolveGraphAg(Gene *queenAg)
 {
-    int generationBestIndex, generationBestScore;
+    int generationBestIndex, batchBest = INT_MAX;
 
     for (int i = 0; i < numberOfGenerations; i++)
     {
         currentGeneration++;
         // printf("Generation %d\n", currentGeneration);
         generationBestIndex = evaluate();
-        generationBestScore = scores[generationBestIndex];
+        if (scores[generationBestIndex] < batchBest)
+        {
+            batchBest = scores[generationBestIndex];
+        }
         // printf("Best score: %d\n", generationBestScore);
-        saveGenerationBestScore(currentGeneration, generationBestScore, population[generationBestIndex]);
+        saveGenerationBestScore(currentGeneration, scores[generationBestIndex], population[generationBestIndex]);
         evolve(queenAg, generationBestIndex);
     }
-    return generationBestScore;
+    return batchBest;
 }
