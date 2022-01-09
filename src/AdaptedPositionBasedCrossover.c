@@ -3,6 +3,7 @@
 
 void adaptedPositionBasedCrossover(int *parentA, int *parentB, int *child, int numberOfPositions)
 {
+    // printf("ADAPTED POSITION BASED CROSSOVER\n");
     emptyOccupied();
     shuffle(positionsArray);
     int positionsFilledInChild[NUM_NODES] = {0};

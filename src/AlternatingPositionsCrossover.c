@@ -2,6 +2,8 @@
 
 void alternatingPositionsCrossover(int *parentA, int *parentB, int *child)
 {
+    // printf("ALTERNATING POSITION BASED CROSSOVER\n");
+
     emptyOccupied();
     int counter = 0;
     for (int i = 0; i < NUM_NODES; i++)

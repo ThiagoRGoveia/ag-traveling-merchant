@@ -2,6 +2,8 @@
 
 void exchangeMutation(int *child, int numberOfMutations)
 {
+    // printf("EXCHANGE MUTATION\n");
+
     for (int i = 0; i < numberOfMutations; i++)
     {
         int randomIndex1 = rand() % NUM_NODES;

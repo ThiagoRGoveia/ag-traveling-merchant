@@ -19,7 +19,6 @@
 #include "ExchangeMutation.h"
 #include "DisplacementMutation.h"
 #include "InsertionMutation.h"
-#include "NoCrossover.h"
 #include "AgToRuleThemAll.h"
 #include "AgGraph.h"
 

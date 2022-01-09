@@ -179,17 +179,29 @@ void printScoresArray()
 
 int evolveQueenAg()
 {
-    int i = 0;
-    while (i++ < 30)
+    // int i = 0;
+    while (1)
     {
+        assexualReproduction(0);
+        printQueenAgPopulation();
+        // DESCOMENTAR DEPOIS
         queenAgGeneration++;
+        printf("Generation: %d\n", queenAgGeneration);
         for (int i = 0; i < QUEEN_AG_POPULATION_SIZE; i++)
         {
-            // queenAgScores[i] = evolveGraphAg(queenAgPopulation[i]);
-            queenAgScores[i] = rand() % 1000;
+            printf("Evaluating queenAg %d\n", i);
+            queenAgScores[i] = evolveGraphAg(queenAgPopulation[i]);
+            // queenAgScores[i] = rand() % 1000;
         }
+        // print scores
+        printScoresArray();
         int bestOfGenerationIndex = evaluateQueenAg();
+        printf("Best of generation id: %d score: %d\n", bestOfGenerationIndex, queenAgScores[bestOfGenerationIndex]);
+        saveGenerationQueenAgBestScore(queenAgGeneration, queenAgScores[bestOfGenerationIndex]);
+        printQueenAgPopulation();
         assexualReproduction(bestOfGenerationIndex);
+        printQueenAgPopulation();
+        numberOfGenerations += 50;
     }
 }
 
@@ -205,6 +217,7 @@ void printQueenAgPopulation()
 {
     for (int i = 0; i < QUEEN_AG_POPULATION_SIZE; i++)
     {
+        print("(%d) ", i);
         printQueenArray(queenAgPopulation[i]);
     }
 }
@@ -216,29 +229,70 @@ void configGene(Gene *gene, int isActive, int mutationPower, int shouldMutateMut
     gene->shouldMutateMutationPower = shouldMutateMutationPower;
 }
 
-void setupPopulation()
+void setupQueenPopulation()
 {
     for (int i = 0; i < QUEEN_AG_POPULATION_SIZE; i++)
     {
         configGene(&queenAgPopulation[i][0], 1, 0, 0);
         configGene(&queenAgPopulation[i][1], 0, 0, 0);
-        configGene(&queenAgPopulation[i][2], 1, 1, 1);
+        configGene(&queenAgPopulation[i][2], 0, 1, 1);
         configGene(&queenAgPopulation[i][3], 0, 0, 0);
-        configGene(&queenAgPopulation[i][4], 0, 0, 0);
+        configGene(&queenAgPopulation[i][4], 1, 5, 1);
         configGene(&queenAgPopulation[i][5], 0, 0, 0);
-        configGene(&queenAgPopulation[i][6], 1, 1, 1);
-        configGene(&queenAgPopulation[i][7], 0, 1, 1);
-        configGene(&queenAgPopulation[i][8], 0, 1, 1);
+        configGene(&queenAgPopulation[i][6], 1, 2, 1);
+        configGene(&queenAgPopulation[i][7], 0, 2, 1);
+        configGene(&queenAgPopulation[i][8], 0, 2, 1);
         configGene(&queenAgPopulation[i][9], 0, 0, 0);
         configGene(&queenAgPopulation[i][10], 0, 0, 0);
     }
+}
+
+void saveGenerationQueenAgBestScore(int currentGeneration, int generationBestScore)
+{
+    FILE *file;
+    file = fopen(GENERATION_QUEEN_AG_BEST_SCORE, "a");
+    fprintf(file, "%d, ", currentGeneration);
+    fprintf(file, "%d, ", generationBestScore);
+    fprintf(file, "%d, %d, ", queenAgGeneration, bestQueenAgScore);
+    fprintf(file, "%d ", bestQueenAg[0].isActive);
+    fprintf(file, "%d ", bestQueenAg[1].isActive);
+    fprintf(file, "| ");
+    fprintf(file, "%d ", bestQueenAg[2].isActive);
+    fprintf(file, "%d ", bestQueenAg[3].isActive);
+    fprintf(file, "%d ", bestQueenAg[4].isActive);
+    fprintf(file, "%d ", bestQueenAg[5].isActive);
+    fprintf(file, "| ");
+    fprintf(file, "%d ", bestQueenAg[6].isActive);
+    fprintf(file, "%d ", bestQueenAg[7].isActive);
+    fprintf(file, "%d ", bestQueenAg[8].isActive);
+    fprintf(file, "| ");
+    fprintf(file, "%d ", bestQueenAg[9].isActive);
+    fprintf(file, "%d, ", bestQueenAg[10].isActive);
+    fprintf(file, "%d ", bestQueenAg[0].mutationPower);
+    fprintf(file, "%d ", bestQueenAg[1].mutationPower);
+    fprintf(file, "| ");
+    fprintf(file, "%d ", bestQueenAg[2].mutationPower);
+    fprintf(file, "%d ", bestQueenAg[3].mutationPower);
+    fprintf(file, "%d ", bestQueenAg[4].mutationPower);
+    fprintf(file, "%d ", bestQueenAg[5].mutationPower);
+    fprintf(file, "| ");
+    fprintf(file, "%d ", bestQueenAg[6].mutationPower);
+    fprintf(file, "%d ", bestQueenAg[7].mutationPower);
+    fprintf(file, "%d ", bestQueenAg[8].mutationPower);
+    fprintf(file, "| ");
+    fprintf(file, "%d ", bestQueenAg[9].mutationPower);
+    fprintf(file, "%d ", bestQueenAg[10].mutationPower);
+    fprintf(file, "\n");
+    fclose(file);
+    // printf("%d, ", currentGeneration);
+    // printf("%d\n", generationBestScore);
 }
 
 void saveBestQueenAgToFile()
 {
     // generation, score, ag
     printf("SAVING BEST QUEEN AG TO FILE\n");
-    FILE *file = fopen("bestQueenAg.txt", "a");
+    FILE *file = fopen(BEST_QUEEN_AG, "a");
     fprintf(file, "%d, %d, ", queenAgGeneration, bestQueenAgScore);
     fprintf(file, "%d ", bestQueenAg[0].isActive);
     fprintf(file, "%d ", bestQueenAg[1].isActive);
@@ -272,11 +326,11 @@ void saveBestQueenAgToFile()
     fclose(file);
 }
 
-int main()
-{
-    srand(42);
-    setupPopulation();
-    populateQueenAgs();
-    evolveQueenAg();
-    printQueenAgPopulation();
-}
+// int main()
+// {
+//     srand(42);
+//     setupQueenPopulation();
+//     populateQueenAgs();
+//     evolveQueenAg();
+//     printQueenAgPopulation();
+// }

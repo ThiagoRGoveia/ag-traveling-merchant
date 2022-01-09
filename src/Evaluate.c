@@ -19,9 +19,10 @@ int evaluate()
         scores[i] = totalDistance;
         if (totalDistance < bestOfAllScore)
         {
+            bestOfAllScore = totalDistance;
             bestScore = totalDistance;
             bestScoreIndex = i;
-            saveBestOfAll(population[i], bestScore, currentGeneration);
+            saveBestOfAll(population[bestScoreIndex], bestOfAllScore, currentGeneration);
         }
         else if (totalDistance < bestScore)
         {
@@ -29,6 +30,7 @@ int evaluate()
             bestScoreIndex = i;
         }
     }
+    // printArray(population[bestScoreIndex]);
     return bestScoreIndex;
 }
 

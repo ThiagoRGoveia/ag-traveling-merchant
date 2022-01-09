@@ -2,6 +2,8 @@
 
 void insertionMutation(int *child, int numberOfMutations)
 {
+    // printf("INSERTION MUTATION\n");
+
     int removalIndex, insertionIndex, temp;
     for (int i = 0; i < numberOfMutations; i++)
     {

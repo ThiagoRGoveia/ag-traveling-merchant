@@ -1,6 +1,5 @@
 #include "Includes.h"
 
-int child[NUM_NODES];
 int population[NUM_CHILDREN][NUM_NODES];
 int scores[NUM_CHILDREN];
 int occupied[NUM_NODES];
@@ -21,6 +20,7 @@ void evolve(Gene *queenAg, int generationBestIndex)
     int parentIndex = -1;
     for (int i = 0; i < NUM_CHILDREN; i++)
     {
+        int child[NUM_NODES];
         if (i != parentIndex)
         {
             for (int j = 0; j < NUMBER_OF_QUEEN_AG_GENES_EXCLUDING_GENOCIDE; j++)
@@ -42,10 +42,10 @@ void evolve(Gene *queenAg, int generationBestIndex)
                         alternatingPositionsCrossover(population[parentIndex], population[i], child);
                         break;
                     case MAXIMAL_PRESERVATIVE_CROSSOVER:
-                        maximalPreservativeCrossover(population[parentIndex], population[i], child);
+                        maximalPreservativeCrossover(population[parentIndex], population[i], child, queenAg[j].mutationPower);
                         break;
                     case NO_CROSSOVER:
-                        noCrossover(parentIndex);
+                        copyArray(population[parentIndex], child);
                         break;
                     case DISPLACEMENT_MUTATION:
                         displacementMutation(child, queenAg[j].mutationPower);
@@ -63,6 +63,7 @@ void evolve(Gene *queenAg, int generationBestIndex)
                 }
             }
         }
+        copyArray(child, population[i]);
     }
 }
 
@@ -73,8 +74,11 @@ int evolveGraphAg(Gene *queenAg)
     for (int i = 0; i < numberOfGenerations; i++)
     {
         currentGeneration++;
+        // printf("Generation %d\n", currentGeneration);
         generationBestIndex = evaluate();
         generationBestScore = scores[generationBestIndex];
+        // printf("Best score: %d\n", generationBestScore);
+        saveGenerationBestScore(currentGeneration, generationBestScore, population[generationBestIndex]);
         evolve(queenAg, generationBestIndex);
     }
     return generationBestScore;
