@@ -1,7 +1,7 @@
 #ifndef DEFINES_H_
 #define DEFINES_H_
 
-#define NUM_NODES 9
+#define NUM_NODES 20
 #define NUM_CHILDREN 100
 #define RANDOM_SEED 42
 #define INITIAL_MUTATION_RATE 1

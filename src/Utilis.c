@@ -78,3 +78,9 @@ void createRandomPath(int *path)
         }
     }
 }
+
+void saveBestOfAll(int *newBestOfAll, int bestScore, int currentGeneration)
+{
+    copyArray(bestOfAll, bestOfAll);
+    // SAVE TO FILE
+}

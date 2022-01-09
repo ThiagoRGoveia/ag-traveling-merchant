@@ -8,5 +8,6 @@ void shuffle(int *array);
 void printArray(int *array);
 void populate();
 void createRandomPath(int *path);
+void saveBestOfAll(int *newBestOfAll, int bestScore, int currentGeneration);
 
 #endif

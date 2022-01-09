@@ -10,20 +10,26 @@ int calculateTotalDistance(int *array)
     return totalDistance;
 }
 
-void evaluate()
+int evaluate()
 {
-    int totalDistance;
+    int totalDistance, bestScore, bestScoreIndex;
     for (int i = 0; i < NUM_CHILDREN; i++)
     {
         totalDistance = calculateTotalDistance(population[i]);
         scores[i] = totalDistance;
-        if (totalDistance < bestScore)
+        if (totalDistance < bestOfAllScore)
         {
             bestScore = totalDistance;
-            copyArray(population[i], bestOfAll);
-            bestOfAllIndex = i;
+            bestScoreIndex = i;
+            saveBestOfAll(population[i], bestScore, currentGeneration);
+        }
+        else if (totalDistance < bestScore)
+        {
+            bestScore = totalDistance;
+            bestScoreIndex = i;
         }
     }
+    return bestScoreIndex;
 }
 
 int getDistance(int A, int B)

@@ -13,6 +13,12 @@
         "genocide.h": "c",
         "utils.h": "c",
         "stdio.h": "c",
-        "agtorulethemall.h": "c"
+        "agtorulethemall.h": "c",
+        "aggraph.h": "c",
+        "nocrossover.h": "c",
+        "maximalpreservativecrossover.h": "c",
+        "evaluate.h": "c",
+        "tournament.h": "c",
+        "predation.h": "c"
     }
 }

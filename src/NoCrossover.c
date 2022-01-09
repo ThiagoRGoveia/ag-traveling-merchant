@@ -1,6 +1,6 @@
 #include "Includes.h"
 
-void noCrossover()
+void noCrossover(int parentIndex)
 {
     for (int i = 0; i < NUM_CHILDREN; i++)
     {
