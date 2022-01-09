@@ -35,14 +35,11 @@ void evolve(Gene *queenAg, int generationBestIndex)
                     case TOURNAMENT:
                         parentIndex = tournament();
                         break;
-                    case ADAPTED_POSITION_BASED_CROSSOVER:
-                        adaptedPositionBasedCrossover(population[parentIndex], population[i], child, queenAg[j].mutationPower);
-                        break;
                     case ALTERNATING_POSITIONS_CROSSOVER:
                         alternatingPositionsCrossover(population[parentIndex], population[i], child);
                         break;
                     case MAXIMAL_PRESERVATIVE_CROSSOVER:
-                        maximalPreservativeCrossover(population[parentIndex], population[i], child, queenAg[j].mutationPower);
+                        maximalPreservativeCrossover(population[parentIndex], population[i], child);
                         break;
                     case NO_CROSSOVER:
                         copyArray(population[parentIndex], child);
@@ -74,13 +71,11 @@ int evolveGraphAg(Gene *queenAg)
     for (int i = 0; i < numberOfGenerations; i++)
     {
         currentGeneration++;
-        // printf("Generation %d\n", currentGeneration);
         generationBestIndex = evaluate();
         if (scores[generationBestIndex] < batchBest)
         {
             batchBest = scores[generationBestIndex];
         }
-        // printf("Best score: %d\n", generationBestScore);
         saveGenerationBestScore(currentGeneration, scores[generationBestIndex], population[generationBestIndex]);
         evolve(queenAg, generationBestIndex);
     }

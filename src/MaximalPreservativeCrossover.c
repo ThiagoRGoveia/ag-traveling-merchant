@@ -11,12 +11,14 @@
 //     printf("\n");
 // }
 
-void maximalPreservativeCrossover(int *parentA, int *parentB, int *child, int subPathSize)
+// Não funciona
+void maximalPreservativeCrossover(int *parentA, int *parentB, int *child)
 {
     // printf("MAXIMAL PRESERVATIVE CROSSOVER\n");
 
     emptyOccupied();
-    int randomStartIndex = rand() % NUM_NODES / 2;
+    int randomStartIndex = rand() % NUM_NODES / 4;
+    int subPathSize = (NUM_NODES / 4);
     int counter = 0;
     for (int i = randomStartIndex; i < randomStartIndex + subPathSize; i++)
     {

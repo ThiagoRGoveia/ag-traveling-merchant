@@ -18,10 +18,10 @@ extern int bestQueenAgScore;
 
 void updateQueenAg(int newBestIndex);
 void copyQueenAg(Gene *source, Gene *destination);
-void mutateGene(Gene *gene);
-void mutateQueenAg(Gene *queenAg);
-void mutateQueenAgGenes(Gene *queenAg);
-void mutateQueenAgPhenotypes(Gene *queenAg);
+void mutateGene(Gene *gene, int score);
+void mutateQueenAg(Gene *queenAg, int score);
+void mutateQueenAgGenes(Gene *queenAg, int score);
+void mutateQueenAgPhenotypes(Gene *queenAg, int score);
 int evaluateQueenAg();
 void assexualReproduction(int generationBestIndex);
 void printQueenAgPopulation();
