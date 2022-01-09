@@ -11,7 +11,7 @@
 int child[NUM_NODES];
 int population[NUM_CHILDREN][NUM_NODES];
 int occupied[NUM_NODES];
-int bestOfAll[NUM_NODES]; //fodelona
+int bestOfAll[NUM_NODES]; // fodelona
 int bestScore = INT_MAX;
 int bestofAllIndex;
 int seedPath[NUM_NODES] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19};
@@ -35,8 +35,9 @@ int main()
     populate();
     // printPopulation();
     // printf("---------------\n");
-    while (1) {
-    // for(int i = 0; i < 8; i++) {
+    while (1)
+    {
+        // for(int i = 0; i < 8; i++) {
         evaluate();
         elitism();
         // printPopulation();
@@ -46,7 +47,8 @@ int main()
 
 void printPopulation()
 {
-    for (int i = 0; i < NUM_CHILDREN; i++) {
+    for (int i = 0; i < NUM_CHILDREN; i++)
+    {
         printArray(population[i]);
     }
 }
@@ -56,7 +58,8 @@ void elitism()
     int bestScoreIndex = 0;
     for (int i = 0; i < NUM_CHILDREN; i++)
     {
-        if (i != bestofAllIndex) {
+        if (i != bestofAllIndex)
+        {
             crossover(population[i], population[bestofAllIndex], child);
             mutation();
             copyArray(child, population[i]);
@@ -133,10 +136,12 @@ void crossover(int *parentA, int *parentB, int *child)
     }
 }
 
-void mutation() {
-    for (int i = 0; i < MUTATION_RATE; i++) {
-        int randomIndex1 = rand() % (NUM_NODES - 1) + 1;
-        int randomIndex2 = rand() % (NUM_NODES - 1) + 1;
+void mutation()
+{
+    for (int i = 0; i < MUTATION_RATE; i++)
+    {
+        int randomIndex1 = lrand48() % (NUM_NODES - 1) + 1;
+        int randomIndex2 = lrand48() % (NUM_NODES - 1) + 1;
         int temp = child[randomIndex1];
         child[randomIndex1] = child[randomIndex2];
         child[randomIndex2] = temp;
@@ -150,7 +155,7 @@ void createRandomPath(int *path)
     {
         while (1)
         {
-            int randomNode = rand() % NUM_NODES;
+            int randomNode = lrand48() % NUM_NODES;
             found = 0;
             for (int j = 0; j <= i; j++)
             {
@@ -182,7 +187,7 @@ void shuffle(int *array)
 {
     for (int i = 1; i < NUM_NODES - 1; i++)
     {
-        int j = i + rand() / (RAND_MAX / (NUM_NODES - i) + 1);
+        int j = i + lrand48() / (RAND_MAX / (NUM_NODES - i) + 1);
         int t = array[j];
         array[j] = array[i];
         array[i] = t;

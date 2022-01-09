@@ -56,7 +56,7 @@ void mutateGene(Gene *gene, int score)
 
 void mutateQueenAg(Gene *queenAg, int score)
 {
-    int mutationChance = rand() % 1000;
+    int mutationChance = lrand48() % 1000;
 
     if (mutationChance < QUEEN_AG_FULL_MUTATION_TRESHOLD)
     {
@@ -83,12 +83,23 @@ void mutateQueenAgPhenotypes(Gene *queenAg, int score)
 {
     int gene;
     // mutate first phenotype
-    gene = rand() % 2;
-    queenAg[gene].isActive = 1;
-    queenAg[abs(gene - 1)].isActive = 0;
+    // gene = lrand48() % 2;
+    // queenAg[gene].isActive = 1;
+    // queenAg[abs(gene - 1)].isActive = 0;
+    gene = lrand48() % 1000;
+    if (gene < 800)
+    {
+        queenAg[ELITISM].isActive = 1;
+        queenAg[TOURNAMENT].isActive = 0;
+    }
+    else if (gene <= 200)
+    {
+        queenAg[ELITISM].isActive = 0;
+        queenAg[TOURNAMENT].isActive = 1;
+    }
 
     // mutate second phenotype
-    gene = rand() % 3 + 2;
+    gene = lrand48() % 3 + 2;
 
     queenAg[gene].isActive = 1;
     mutateGene(&queenAg[gene], score);
@@ -99,7 +110,7 @@ void mutateQueenAgPhenotypes(Gene *queenAg, int score)
     }
 
     // mutate third phenotype
-    gene = rand() % 3 + 5;
+    gene = lrand48() % 3 + 5;
     queenAg[gene].isActive = 1;
     mutateGene(&queenAg[gene], score);
     for (int i = 5; i < 8; i++)
@@ -109,7 +120,7 @@ void mutateQueenAgPhenotypes(Gene *queenAg, int score)
     }
 
     // mutate fourth phenotype
-    gene = rand() % 1000;
+    gene = lrand48() % 1000;
     if (gene < GENOCIDE_THRESHOLD)
     {
         queenAg[GENOCIDE].isActive = 1;
@@ -215,7 +226,7 @@ int evolveQueenAg()
         {
             // printf("Evaluating queenAg %d\n", i);
             queenAgScores[i] = evolveGraphAg(queenAgPopulation[i]);
-            // queenAgScores[i] = rand() % 1000;
+            // queenAgScores[i] = lrand48() % 1000;
         }
         // print scores
         // printScoresArray();
@@ -286,7 +297,6 @@ void saveGenerationQueenAgBestScore(int currentGeneration, int generationBestSco
     file = fopen(GENERATION_QUEEN_AG_BEST_SCORE, "a");
     fprintf(file, "%d, ", currentGeneration);
     fprintf(file, "%d, ", generationBestScore);
-    fprintf(file, "%d, %d, ", queenAgGeneration, bestQueenAgScore);
     fprintf(file, "%d ", bestQueenAg[0].isActive);
     fprintf(file, "%d ", bestQueenAg[1].isActive);
     fprintf(file, "| ");
@@ -361,7 +371,7 @@ void saveBestQueenAgToFile()
 
 // int main()
 // {
-//     srand(42);
+//     slrand48(42);
 //     setupQueenPopulation();
 //     populateQueenAgs();
 //     evolveQueenAg();

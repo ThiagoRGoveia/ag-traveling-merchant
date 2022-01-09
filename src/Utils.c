@@ -30,7 +30,7 @@ void shuffle(int *array)
 {
     for (int i = 0; i < NUM_NODES - 1; i++)
     {
-        int j = i + rand() / (RAND_MAX / (NUM_NODES - i) + 1);
+        int j = i + lrand48() / (RAND_MAX / (NUM_NODES - i) + 1);
         int t = array[j];
         array[j] = array[i];
         array[i] = t;
@@ -61,7 +61,7 @@ void createRandomPath(int *path)
     {
         while (1)
         {
-            int randomNode = rand() % NUM_NODES;
+            int randomNode = lrand48() % NUM_NODES;
             found = 0;
             for (int j = 0; j <= i; j++)
             {

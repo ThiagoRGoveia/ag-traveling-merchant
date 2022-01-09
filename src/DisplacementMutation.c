@@ -5,8 +5,8 @@ void displacementMutation(int *child, int subPathSize)
     // printf("DISPLACEMENT MUTATION\n");
 
     int placeholder[subPathSize];
-    int removalIndex = rand() % (NUM_NODES - subPathSize);
-    int insertionIndex = rand() % (NUM_NODES - subPathSize);
+    int removalIndex = lrand48() % (NUM_NODES - subPathSize);
+    int insertionIndex = lrand48() % (NUM_NODES - subPathSize);
     for (int i = 0; i < subPathSize; i++)
     {
         placeholder[i] = child[removalIndex + i];

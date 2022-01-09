@@ -7,8 +7,8 @@ void insertionMutation(int *child, int numberOfMutations)
     int removalIndex, insertionIndex, temp;
     for (int i = 0; i < numberOfMutations; i++)
     {
-        removalIndex = rand() % NUM_NODES;
-        insertionIndex = rand() % NUM_NODES;
+        removalIndex = lrand48() % NUM_NODES;
+        insertionIndex = lrand48() % NUM_NODES;
         temp = child[removalIndex];
         for (int i = removalIndex; i < NUM_NODES - 1; i++)
         {

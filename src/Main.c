@@ -4,7 +4,11 @@
 
 int main()
 {
-    srand(RANDOM_SEED);
+    unsigned short seed[3] = {155, 0, 155};
+
+    // Initialize Seed Value For Random Number
+    seed48(&seed[0]);
+    // seed48(RANDOM_SEED);
     // Gene queenAg[NUMBER_OF_QUEEN_AG_GENES];
     // configGene(&queenAg[0], 1, 0, 0);
     // configGene(&queenAg[1], 0, 0, 0);
