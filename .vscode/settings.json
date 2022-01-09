@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+        "graph.h": "c",
+        "adaptedpositionbasedcrossover.h": "c",
+        "includes.h": "c",
+        "insertionmutation.h": "c",
+        "displacementmutation.h": "c",
+        "exchangemutation.h": "c",
+        "array": "c",
+        "alternatingpositionscrossover.h": "c",
+        "globals.h": "c",
+        "defines.h": "c",
+        "genocide.h": "c",
+        "utils.h": "c",
+        "stdio.h": "c",
+        "agtorulethemall.h": "c"
+    }
+}
