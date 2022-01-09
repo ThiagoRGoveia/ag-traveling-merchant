@@ -11,9 +11,9 @@ int positionsArray[NUM_NODES] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1
 int numberOfGenerations = 300;
 int currentGeneration = 0;
 
-void evolve(int *queenAg, int generationBestIndex)
+void evolve(Gene *queenAg, int generationBestIndex)
 {
-    if (queenAg[GENOCIDE])
+    if (queenAg[GENOCIDE].isActive)
     {
         genocide();
         return;
@@ -25,7 +25,7 @@ void evolve(int *queenAg, int generationBestIndex)
         {
             for (int j = 0; j < NUMBER_OF_QUEEN_AG_GENES_EXCLUDING_GENOCIDE; j++)
             {
-                if (queenAg[j])
+                if (queenAg[j].isActive)
                 {
                     switch (j)
                     {
@@ -36,7 +36,7 @@ void evolve(int *queenAg, int generationBestIndex)
                         parentIndex = tournament();
                         break;
                     case ADAPTED_POSITION_BASED_CROSSOVER:
-                        adaptedPositionBasedCrossover(population[parentIndex], population[i], child, adaptedPositionBasedCrossover_numberOfPositions);
+                        adaptedPositionBasedCrossover(population[parentIndex], population[i], child, queenAg[j].mutationPower);
                         break;
                     case ALTERNATING_POSITIONS_CROSSOVER:
                         alternatingPositionsCrossover(population[parentIndex], population[i], child);
@@ -48,13 +48,13 @@ void evolve(int *queenAg, int generationBestIndex)
                         noCrossover(parentIndex);
                         break;
                     case DISPLACEMENT_MUTATION:
-                        displacementMutation(child, displacementMutation_subPathSize);
+                        displacementMutation(child, queenAg[j].mutationPower);
                         break;
                     case EXCHANGE_MUTATION:
-                        exchangeMutation(child, exchangeMutation_numberOfMutations);
+                        exchangeMutation(child, queenAg[j].mutationPower);
                         break;
                     case INSERTION_MUTATION:
-                        insertionMutation(child, insertionMutation_numberOfMutations);
+                        insertionMutation(child, queenAg[j].mutationPower);
                         break;
                     case PREDATION:
                         predation();
@@ -66,7 +66,7 @@ void evolve(int *queenAg, int generationBestIndex)
     }
 }
 
-int evolveGraphAg(int *queenAg)
+int evolveGraphAg(Gene *queenAg)
 {
     int generationBestIndex, generationBestScore;
 

@@ -82,5 +82,20 @@ void createRandomPath(int *path)
 void saveBestOfAll(int *newBestOfAll, int bestScore, int currentGeneration)
 {
     copyArray(bestOfAll, bestOfAll);
-    // SAVE TO FILE
+    saveBestOfAllToFile(bestOfAll, bestScore, currentGeneration);
+}
+
+void saveBestOfAllToFile(int *newBestOfAll, int bestScore, int currentGeneration)
+{
+    // generation, score, path
+    FILE *file;
+    file = fopen("bestOfAll.csv", "a");
+    fprintf(file, "%d, ", currentGeneration);
+    fprintf(file, "%d, ", bestScore);
+    for (int i = 0; i < NUM_NODES; i++)
+    {
+        fprintf(file, "%d ", newBestOfAll[i]);
+    }
+    fprintf(file, "\n");
+    fclose(file);
 }

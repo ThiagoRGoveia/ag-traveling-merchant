@@ -19,6 +19,8 @@
 #define MAX_MUTATION (NUM_NODES / 2)
 #define QUEEN_AG_POPULATION_SIZE 50
 #define QUEEN_AG_FULL_MUTATION_TRESHOLD 200
+#define GENOCIDE_THRESHOLD 100
+#define PREDATION_THRESHOLD 600
 
 typedef struct
 {
@@ -27,10 +29,6 @@ typedef struct
     int shouldMutateMutationPower;
 } Gene;
 
-extern int adaptedPositionBasedCrossover_numberOfPositions;
-extern int displacementMutation_subPathSize;
-extern int exchangeMutation_numberOfMutations;
-extern int insertionMutation_numberOfMutations;
 extern Gene queenAg[NUMBER_OF_QUEEN_AG_GENES];
 extern Gene queenAgPopulation[QUEEN_AG_POPULATION_SIZE][NUMBER_OF_QUEEN_AG_GENES];
 extern int queenAgScores[QUEEN_AG_POPULATION_SIZE];
@@ -46,5 +44,10 @@ void mutateQueenAgPhenotypes(Gene *queenAg);
 int evaluateQueenAg();
 void assexualReproduction(int generationBestIndex);
 void printQueenAgPopulation();
+void populateQueenAgs();
+void printQueenAgPopulation();
+void configGene(Gene *gene, int isActive, int mutationPower, int shouldMutateMutationPower);
+void setupPopulation();
+void saveBestQueenAgToFile();
 
 #endif
