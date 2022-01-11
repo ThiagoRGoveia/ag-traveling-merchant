@@ -12,30 +12,39 @@ int currentGeneration = 0;
 
 void evolve(Gene *queenAg, int generationBestIndex)
 {
+
     if (queenAg[GENOCIDE].isActive)
     {
         genocide();
         return;
     }
-    int parentIndex = -1;
+    // printf("1.4.1\n");
+
+    int parentIndex = generationBestIndex;
+    // printf("1.4.2 -- %d -- ", parentIndex);
+    // printArray(population[parentIndex]);
+
+    if (queenAg[TOURNAMENT].isActive)
+    {
+        parentIndex = tournament();
+    }
+    // printf("1.4.3\n");
+    // printf("START\n");
     for (int i = 0; i < NUM_CHILDREN; i++)
     {
-        int child[NUM_NODES];
         if (i != parentIndex)
         {
-            for (int j = 0; j < NUMBER_OF_QUEEN_AG_GENES_EXCLUDING_GENOCIDE; j++)
+            int child[NUM_NODES];
+            for (int j = 2; j < NUMBER_OF_QUEEN_AG_GENES_EXCLUDING_GENOCIDE; j++)
             {
                 if (queenAg[j].isActive)
                 {
                     switch (j)
                     {
-                    case ELITISM:
-                        parentIndex = generationBestIndex;
-                        break;
-                    case TOURNAMENT:
-                        parentIndex = tournament();
-                        break;
                     case ALTERNATING_POSITIONS_CROSSOVER:
+                        // printf("i = %d\n", i);
+                        // printf("parentIndex = %d\n", parentIndex);
+                        // printArray(population[parentIndex]);
                         alternatingPositionsCrossover(population[parentIndex], population[i], child);
                         break;
                     case MAXIMAL_PRESERVATIVE_CROSSOVER:
@@ -59,25 +68,40 @@ void evolve(Gene *queenAg, int generationBestIndex)
                     }
                 }
             }
+            copyArray(child, population[i]);
         }
-        copyArray(child, population[i]);
     }
+
+    // printf("END\n");
+    // printf("1.4.4\n");
 }
 
 int evolveGraphAg(Gene *queenAg)
 {
     int generationBestIndex, batchBest = INT_MAX;
 
+    // printf("1\n");
     for (int i = 0; i < numberOfGenerations; i++)
     {
+        // printf("1.1\n");
+
         currentGeneration++;
         generationBestIndex = evaluate();
+        // printf("1.2 generationBestIndex = %d\n", generationBestIndex);
+
         if (scores[generationBestIndex] < batchBest)
         {
             batchBest = scores[generationBestIndex];
         }
+        // printf("1.3\n");
+
         saveGenerationBestScore(currentGeneration, scores[generationBestIndex], population[generationBestIndex]);
+        // printf("1.4\n");
+
         evolve(queenAg, generationBestIndex);
+        // printf("1.5\n");
     }
+    // printf("2\n");
+
     return batchBest;
 }

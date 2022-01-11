@@ -12,7 +12,7 @@ int calculateTotalDistance(int *array)
 
 int evaluate()
 {
-    int totalDistance, bestScore, bestScoreIndex;
+    int totalDistance, bestScore = INT_MAX, generationBest;
     for (int i = 0; i < NUM_CHILDREN; i++)
     {
         totalDistance = calculateTotalDistance(population[i]);
@@ -21,17 +21,17 @@ int evaluate()
         {
             bestOfAllScore = totalDistance;
             bestScore = totalDistance;
-            bestScoreIndex = i;
-            saveBestOfAll(population[bestScoreIndex], bestOfAllScore, currentGeneration);
+            generationBest = i;
+            saveBestOfAll(population[generationBest], bestOfAllScore, currentGeneration);
         }
         else if (totalDistance < bestScore)
         {
             bestScore = totalDistance;
-            bestScoreIndex = i;
+            generationBest = i;
         }
     }
-    // printArray(population[bestScoreIndex]);
-    return bestScoreIndex;
+    // printArray(population[generationBest]);
+    return generationBest;
 }
 
 int getDistance(int A, int B)

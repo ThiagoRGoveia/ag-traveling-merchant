@@ -18,5 +18,4 @@ extern int numberOfGenerations;
 extern int graph[20][20];
 extern int completeGraph[20][20];
 extern int path[20][20][20];
-
 #endif

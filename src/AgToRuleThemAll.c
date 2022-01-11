@@ -87,15 +87,15 @@ void mutateQueenAgPhenotypes(Gene *queenAg, int score)
     // queenAg[gene].isActive = 1;
     // queenAg[abs(gene - 1)].isActive = 0;
     gene = lrand48() % 1000;
-    if (gene < 800)
-    {
-        queenAg[ELITISM].isActive = 1;
-        queenAg[TOURNAMENT].isActive = 0;
-    }
-    else if (gene <= 200)
+    if (gene <= 200)
     {
         queenAg[ELITISM].isActive = 0;
         queenAg[TOURNAMENT].isActive = 1;
+    }
+    else
+    {
+        queenAg[ELITISM].isActive = 1;
+        queenAg[TOURNAMENT].isActive = 0;
     }
 
     // mutate second phenotype
@@ -217,13 +217,14 @@ void printScoresArray()
 int evolveQueenAg()
 {
     // int i = 0;
+    assexualReproduction(0);
     while (1)
     {
-        assexualReproduction(0);
         queenAgGeneration++;
         printf("Generation: %d\n", queenAgGeneration);
         for (int i = 0; i < QUEEN_AG_POPULATION_SIZE; i++)
         {
+            printQueenArray(queenAgPopulation[i]);
             // printf("Evaluating queenAg %d\n", i);
             queenAgScores[i] = evolveGraphAg(queenAgPopulation[i]);
             // queenAgScores[i] = lrand48() % 1000;
@@ -280,11 +281,11 @@ void setupQueenPopulation()
 
         configGene(&queenAgPopulation[i][ELITISM], 1, 0, 0);
         configGene(&queenAgPopulation[i][TOURNAMENT], 0, 0, 0);
-        configGene(&queenAgPopulation[i][ALTERNATING_POSITIONS_CROSSOVER], 0, 0, 0);
-        configGene(&queenAgPopulation[i][MAXIMAL_PRESERVATIVE_CROSSOVER], 1, 0, 0);
+        configGene(&queenAgPopulation[i][ALTERNATING_POSITIONS_CROSSOVER], 1, 0, 0);
+        configGene(&queenAgPopulation[i][MAXIMAL_PRESERVATIVE_CROSSOVER], 0, 0, 0);
         configGene(&queenAgPopulation[i][NO_CROSSOVER], 0, 0, 0);
         configGene(&queenAgPopulation[i][DISPLACEMENT_MUTATION], 1, 2, 1);
-        configGene(&queenAgPopulation[i][EXCHANGE_MUTATION], 0, 2, 1);
+        configGene(&queenAgPopulation[i][EXCHANGE_MUTATION], 0, 5, 1);
         configGene(&queenAgPopulation[i][INSERTION_MUTATION], 0, 2, 1);
         configGene(&queenAgPopulation[i][PREDATION], 0, 0, 0);
         configGene(&queenAgPopulation[i][GENOCIDE], 0, 0, 0);
