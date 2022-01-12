@@ -15,7 +15,5 @@ extern int graph[NUM_NODES][NUM_NODES];
 extern int completeGraph[NUM_NODES][NUM_NODES];
 extern int currentGeneration;
 extern int numberOfGenerations;
-extern int graph[20][20];
-extern int completeGraph[20][20];
-extern int path[20][20][20];
+// extern int graph[NUM_NODES][NUM_NODES];
 #endif

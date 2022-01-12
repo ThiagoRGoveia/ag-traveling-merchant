@@ -12,7 +12,8 @@ int calculateTotalDistance(int *array)
 
 int evaluate()
 {
-    int totalDistance, bestScore = INT_MAX, generationBest;
+    long int totalDistance;
+    int bestScore = INT_MAX, generationBest;
     for (int i = 0; i < NUM_CHILDREN; i++)
     {
         totalDistance = calculateTotalDistance(population[i]);

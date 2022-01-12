@@ -4,14 +4,14 @@
 // Configs
 #define NUM_NODES 20
 #define NUM_CHILDREN 100
-#define RANDOM_SEED 42
 #define INITIAL_MUTATION_RATE 1
 
 // Paths
-#define BEST_QUEEN_AG "output/bestQueenAg.csv"
-#define GENERATION_QUEEN_AG_BEST_SCORE "output/generationQueenBestScore.csv"
-#define BEST_OF_ALL "output/bestOfAll.csv"
-#define GENERATION_BEST_SCORE "output/generationBestScore.csv"
+#define BEST_QUEEN_AG "output/bestQueenAg_500_30.csv"
+#define GENERATION_QUEEN_AG_BEST_SCORE "output/generationQueenBestScore_500_30.csv"
+#define BEST_OF_ALL "output/bestOfAll_500_30.csv"
+#define GENERATION_BEST_SCORE "output/generationBestScore_500_30.csv"
+#define GRAPH_FILE_PATH "graphGenerator/graphs/graph_500_30.bin"
 
 #define ELITISM 0
 #define TOURNAMENT 1
@@ -34,4 +34,5 @@
 #define QUEEN_AG_FULL_MUTATION_TRESHOLD 800
 #define GENOCIDE_THRESHOLD 100
 #define PREDATION_THRESHOLD 600
+
 #endif

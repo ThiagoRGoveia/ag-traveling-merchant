@@ -1,16 +1,5 @@
 #include "Includes.h"
 
-// int occupied[NUM_NODES] = {0};
-
-// void printArray(int *array)
-// {
-//     for (int i = 0; i < NUM_NODES; i++)
-//     {
-//         printf("%d ", array[i]);
-//     }
-//     printf("\n");
-// }
-
 // Não funciona
 void maximalPreservativeCrossover(int *parentA, int *parentB, int *child)
 {

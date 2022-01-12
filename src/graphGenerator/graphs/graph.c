@@ -1,0 +1,5 @@
+int graph[4][4] = {{INT_MAX, INT_MAX, 100, 83},
+{INT_MAX, INT_MAX, 51, 25},
+{100, 51, INT_MAX, INT_MAX},
+{83, 25, INT_MAX, INT_MAX}
+};

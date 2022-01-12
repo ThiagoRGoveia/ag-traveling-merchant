@@ -19,6 +19,8 @@
         "maximalpreservativecrossover.h": "c",
         "evaluate.h": "c",
         "tournament.h": "c",
-        "predation.h": "c"
+        "predation.h": "c",
+        "dijkstra.h": "c",
+        "filehandler.h": "c"
     }
 }
