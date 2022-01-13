@@ -1,5 +1,5 @@
 all:
-	gcc -o exec_1000_100 *.c
+	gcc -o exec ./src/*.c
 
 run:
 	./exec

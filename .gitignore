@@ -1,2 +1,2 @@
-src/output/*
+*.csv
 src/graphGenerator/graphs/*

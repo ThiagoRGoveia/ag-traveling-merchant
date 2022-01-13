@@ -7,10 +7,10 @@
 #define INITIAL_MUTATION_RATE 1
 
 // Paths
-#define BEST_QUEEN_AG "output/bestQueenAg_1000_100.csv"
-#define GENERATION_QUEEN_AG_BEST_SCORE "output/generationQueenBestScore_1000_100.csv"
-#define BEST_OF_ALL "output/bestOfAll_1000_100.csv"
-#define GENERATION_BEST_SCORE "output/generationBestScore_1000_100.csv"
+#define BEST_QUEEN_AG "./src/output/bestQueenAg_1000_100.csv"
+#define GENERATION_QUEEN_AG_BEST_SCORE "./src/output/generationQueenBestScore_1000_100.csv"
+#define BEST_OF_ALL "./src/output/bestOfAll_1000_100.csv"
+#define GENERATION_BEST_SCORE "./src/output/generationBestScore_1000_100.csv"
 
 #define ELITISM 0
 #define TOURNAMENT 1
