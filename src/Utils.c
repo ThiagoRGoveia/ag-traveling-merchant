@@ -21,7 +21,7 @@ void printPopulation()
 {
     for (int i = 0; i < NUM_CHILDREN; i++)
     {
-        printf("Score: %d: ", scores[i]);
+        printf("Score: %lld: ", scores[i]);
         printArray(population[i]);
     }
 }
@@ -80,19 +80,19 @@ void createRandomPath(int *path)
     }
 }
 
-void saveBestOfAll(int *newBestOfAll, int bestScore, int currentGeneration)
+void saveBestOfAll(int *newBestOfAll, long long int bestScore, int currentGeneration)
 {
     copyArray(newBestOfAll, bestOfAll);
     saveBestOfAllToFile(bestOfAll, bestScore, currentGeneration);
 }
 
-void saveBestOfAllToFile(int *newBestOfAll, int bestScore, int currentGeneration)
+void saveBestOfAllToFile(int *newBestOfAll, long long int bestScore, int currentGeneration)
 {
     // generation, score, path
     FILE *file;
     file = fopen(BEST_OF_ALL, "a");
     fprintf(file, "%d, ", currentGeneration);
-    fprintf(file, "%d, ", bestScore);
+    fprintf(file, "%lld, ", bestScore);
     for (int i = 0; i < NUM_NODES; i++)
     {
         fprintf(file, "%d ", newBestOfAll[i]);
@@ -108,16 +108,16 @@ void saveBestOfAllToFile(int *newBestOfAll, int bestScore, int currentGeneration
     // printf("\n");
 }
 
-void saveGenerationBestScore(int currentGeneration, int generationBestScore, int *generationBest)
+void saveGenerationBestScore(int currentGeneration, long long int generationBestScore, int *generationBest)
 {
     FILE *file;
     file = fopen(GENERATION_BEST_SCORE, "a");
     fprintf(file, "%d, ", currentGeneration);
-    fprintf(file, "%d, ", generationBestScore);
-    for (int i = 0; i < NUM_NODES; i++)
-    {
-        fprintf(file, "%d ", generationBest[i]);
-    }
+    fprintf(file, "%lld, ", generationBestScore);
+    // for (int i = 0; i < NUM_NODES; i++)
+    // {
+    //     fprintf(file, "%d ", generationBest[i]);
+    // }
     fprintf(file, "\n");
 
     fclose(file);

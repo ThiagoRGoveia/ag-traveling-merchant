@@ -5,10 +5,10 @@
 
 extern int child[NUM_NODES];
 extern int population[NUM_CHILDREN][NUM_NODES];
-extern int scores[NUM_CHILDREN];
+extern long long int scores[NUM_CHILDREN];
 extern int occupied[NUM_NODES];
 extern int bestOfAll[NUM_NODES];
-extern int bestOfAllScore;
+extern long long int bestOfAllScore;
 extern int seedPath[NUM_NODES];
 extern int positionsArray[NUM_NODES];
 extern int graph[NUM_NODES][NUM_NODES];

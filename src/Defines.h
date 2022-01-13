@@ -2,16 +2,15 @@
 #define DEFINES_H_
 
 // Configs
-#define NUM_NODES 20
+#define NUM_NODES 1000
 #define NUM_CHILDREN 100
 #define INITIAL_MUTATION_RATE 1
 
 // Paths
-#define BEST_QUEEN_AG "output/bestQueenAg_500_30.csv"
-#define GENERATION_QUEEN_AG_BEST_SCORE "output/generationQueenBestScore_500_30.csv"
-#define BEST_OF_ALL "output/bestOfAll_500_30.csv"
-#define GENERATION_BEST_SCORE "output/generationBestScore_500_30.csv"
-#define GRAPH_FILE_PATH "graphGenerator/graphs/graph_500_30.bin"
+#define BEST_QUEEN_AG "output/bestQueenAg_1000_100.csv"
+#define GENERATION_QUEEN_AG_BEST_SCORE "output/generationQueenBestScore_1000_100.csv"
+#define BEST_OF_ALL "output/bestOfAll_1000_100.csv"
+#define GENERATION_BEST_SCORE "output/generationBestScore_1000_100.csv"
 
 #define ELITISM 0
 #define TOURNAMENT 1

@@ -8,8 +8,8 @@ void shuffle(int *array);
 void printArray(int *array);
 void populate();
 void createRandomPath(int *path);
-void saveBestOfAll(int *newBestOfAll, int bestScore, int currentGeneration);
-void saveBestOfAllToFile(int *newBestOfAll, int bestScore, int currentGeneration);
-void saveGenerationBestScore(int currentGeneration, int generationBestScore, int *generationBest);
+void saveBestOfAll(int *newBestOfAll, long long int bestScore, int currentGeneration);
+void saveBestOfAllToFile(int *newBestOfAll, long long int bestScore, int currentGeneration);
+void saveGenerationBestScore(int currentGeneration, long long int generationBestScore, int *generationBest);
 
 #endif

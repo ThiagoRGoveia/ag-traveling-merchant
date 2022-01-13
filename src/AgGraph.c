@@ -60,9 +60,10 @@ int evolve(Gene *queenAg, int generationBestIndex)
     return 0;
 }
 
-int evolveGraphAg(Gene *queenAg)
+long long int evolveGraphAg(Gene *queenAg)
 {
-    int generationBestIndex, batchBest = INT_MAX;
+    int generationBestIndex;
+    long long int batchBest = INT_MAX;
 
     int shouldBreak = 0;
     for (int i = 0; (i < numberOfGenerations && !shouldBreak); i++)
@@ -75,7 +76,6 @@ int evolveGraphAg(Gene *queenAg)
         {
             batchBest = scores[generationBestIndex];
         }
-
         saveGenerationBestScore(currentGeneration, scores[generationBestIndex], population[generationBestIndex]);
 
         shouldBreak = evolve(queenAg, generationBestIndex);

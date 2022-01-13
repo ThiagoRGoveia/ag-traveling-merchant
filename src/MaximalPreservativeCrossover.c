@@ -1,9 +1,8 @@
 #include "Includes.h"
 
-// Não funciona
 void maximalPreservativeCrossover(int *parentA, int *parentB, int *child)
 {
-    // printf("MAXIMAL PRESERVATIVE CROSSOVER\n");
+    printf("MAXIMAL PRESERVATIVE CROSSOVER\n");
 
     emptyOccupied();
     int randomStartIndex = lrand48() % NUM_NODES / 4;

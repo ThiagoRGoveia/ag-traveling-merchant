@@ -12,16 +12,16 @@ typedef struct
 
 extern Gene queenAg[NUMBER_OF_QUEEN_AG_GENES];
 extern Gene queenAgPopulation[QUEEN_AG_POPULATION_SIZE][NUMBER_OF_QUEEN_AG_GENES];
-extern int queenAgScores[QUEEN_AG_POPULATION_SIZE];
+extern long long int queenAgScores[QUEEN_AG_POPULATION_SIZE];
 extern int bestKinAgIndex;
-extern int bestQueenAgScore;
+extern long long int bestQueenAgScore;
 
 void updateQueenAg(int newBestIndex);
 void copyQueenAg(Gene *source, Gene *destination);
-void mutateGene(Gene *gene, int score);
-void mutateQueenAg(Gene *queenAg, int score);
-void mutateQueenAgGenes(Gene *queenAg, int score);
-void mutateQueenAgPhenotypes(Gene *queenAg, int score);
+void mutateGene(Gene *gene);
+void mutateQueenAg(Gene *queenAg);
+void mutateQueenAgGenes(Gene *queenAg);
+void mutateQueenAgPhenotypes(Gene *queenAg);
 int evaluateQueenAg();
 void assexualReproduction(int generationBestIndex);
 void printQueenAgPopulation();

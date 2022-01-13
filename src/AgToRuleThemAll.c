@@ -3,9 +3,9 @@
 // int queenAg[NUMBER_OF_QUEEN_AG_GENES] = {0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0};
 Gene bestQueenAg[NUMBER_OF_QUEEN_AG_GENES];
 int bestGeneProperties[4];
-int bestQueenAgScore = INT_MAX;
+long long int bestQueenAgScore = INT_MAX;
 int bestQueenAgGeneration = 0;
-int queenAgScores[QUEEN_AG_POPULATION_SIZE] = {0};
+long long int queenAgScores[QUEEN_AG_POPULATION_SIZE] = {0};
 int queenAgGeneration = 0;
 Gene queenAgPopulation[QUEEN_AG_POPULATION_SIZE][NUMBER_OF_QUEEN_AG_GENES];
 
@@ -25,84 +25,67 @@ void copyQueenAg(Gene *source, Gene *destination)
     }
 }
 
-void mutateGene(Gene *gene, int score)
+void mutateGene(Gene *gene)
 {
-    // if (abs(score - bestQueenAgScore) < ERROR_THRESHOLD && gene->mutationPower > MIN_MUTATION)
-    // {
-    //     gene->mutationPower--;
-    // }
-    // else if (abs(score - bestQueenAgScore) < ERROR_THRESHOLD && gene->mutationPower < MAX_MUTATION)
-    // {
-    //     gene->mutationPower++;
-    // }
-    // else if (abs(score - bestQueenAgScore) >= ERROR_THRESHOLD && gene->mutationPower < MAX_MUTATION)
-    // {
-    //     gene->mutationPower++;
-    // }
-    // else if (abs(score - bestQueenAgScore) <= ERROR_THRESHOLD && gene->mutationPower > MIN_MUTATION)
-    // {
-    //     gene->mutationPower--;
-    // }
-
-    if ((queenAgGeneration - bestQueenAgGeneration) > 20 && gene->mutationPower < MAX_MUTATION)
+    if ((queenAgGeneration - bestQueenAgGeneration) < 100 && gene->mutationPower < MAX_MUTATION)
     {
         gene->mutationPower++;
     }
-    else if ((queenAgGeneration - bestQueenAgGeneration) < 20 && gene->mutationPower > MIN_MUTATION)
+    else if ((queenAgGeneration - bestQueenAgGeneration) > 100 && gene->mutationPower > MIN_MUTATION)
     {
         gene->mutationPower--;
     }
 }
 
-void mutateQueenAg(Gene *queenAg, int score)
+void mutateQueenAg(Gene *queenAg)
 {
     int mutationChance = lrand48() % 1000;
 
     if (mutationChance < QUEEN_AG_FULL_MUTATION_TRESHOLD)
     {
-        mutateQueenAgPhenotypes(queenAg, score);
+        mutateQueenAgPhenotypes(queenAg);
     }
     else
     {
-        mutateQueenAgGenes(queenAg, score);
+        mutateQueenAgGenes(queenAg);
     }
 }
 
-void mutateQueenAgGenes(Gene *queenAg, int score)
+void mutateQueenAgGenes(Gene *queenAg)
 {
     for (int i = 0; i < NUMBER_OF_QUEEN_AG_GENES; i++)
     {
         if (queenAg[i].isActive, queenAg[i].shouldMutateMutationPower)
         {
-            mutateGene(&queenAg[i], score);
+            mutateGene(&queenAg[i]);
         }
     }
 }
 
-void mutateQueenAgPhenotypes(Gene *queenAg, int score)
+void mutateQueenAgPhenotypes(Gene *queenAg)
 {
     int gene;
     // mutate first phenotype
     // gene = lrand48() % 2;
     // queenAg[gene].isActive = 1;
     // queenAg[abs(gene - 1)].isActive = 0;
-    gene = lrand48() % 1000;
-    if (gene <= 200)
-    {
-        queenAg[ELITISM].isActive = 0;
-        queenAg[TOURNAMENT].isActive = 1;
-    }
-    else
-    {
-        queenAg[ELITISM].isActive = 1;
-        queenAg[TOURNAMENT].isActive = 0;
-    }
+    // gene = lrand48() % 1000;
+    // if (gene <= 200)
+    // {
+    //     queenAg[ELITISM].isActive = 0;
+    //     queenAg[TOURNAMENT].isActive = 1;
+    // }
+    // else
+    // {
+    //     queenAg[ELITISM].isActive = 1;
+    //     queenAg[TOURNAMENT].isActive = 0;
+    // }
 
     // mutate second phenotype
     gene = lrand48() % 3 + 2;
 
     queenAg[gene].isActive = 1;
-    mutateGene(&queenAg[gene], score);
+    mutateGene(&queenAg[gene]);
     for (int i = 2; i < 5; i++)
     {
         if (i != gene)
@@ -112,7 +95,7 @@ void mutateQueenAgPhenotypes(Gene *queenAg, int score)
     // mutate third phenotype
     gene = lrand48() % 3 + 5;
     queenAg[gene].isActive = 1;
-    mutateGene(&queenAg[gene], score);
+    mutateGene(&queenAg[gene]);
     for (int i = 5; i < 8; i++)
     {
         if (i != gene)
@@ -123,7 +106,7 @@ void mutateQueenAgPhenotypes(Gene *queenAg, int score)
     gene = lrand48() % 1000;
     if (gene < GENOCIDE_THRESHOLD)
     {
-        queenAg[GENOCIDE].isActive = 1;
+        queenAg[GENOCIDE].isActive = 0;
         queenAg[PREDATION].isActive = 0;
     }
     else if (gene < PREDATION_THRESHOLD)
@@ -167,7 +150,7 @@ void assexualReproduction(int generationBestIndex)
         if (i == generationBestIndex)
             continue;
         copyQueenAg(queenAgPopulation[generationBestIndex], queenAgPopulation[i]);
-        mutateQueenAg(queenAgPopulation[i], queenAgScores[i]);
+        mutateQueenAg(queenAgPopulation[i]);
     }
 }
 
@@ -207,7 +190,7 @@ void printScoresArray()
 {
     for (int i = 0; i < QUEEN_AG_POPULATION_SIZE; i++)
     {
-        printf("%d ", queenAgScores[i]);
+        printf("%lld ", queenAgScores[i]);
     }
     printf("\n");
 }
@@ -234,7 +217,7 @@ void populateQueenAgs()
 {
     for (int i = 0; i < QUEEN_AG_POPULATION_SIZE; i++)
     {
-        mutateQueenAg(queenAgPopulation[i], queenAgScores[i]);
+        mutateQueenAg(queenAgPopulation[i]);
     }
 }
 
@@ -277,42 +260,42 @@ void saveGenerationQueenAgBestScore(int currentGeneration, int generationBestSco
     file = fopen(GENERATION_QUEEN_AG_BEST_SCORE, "a");
     fprintf(file, "%d, ", currentGeneration);
     fprintf(file, "%d, ", generationBestScore);
-    fprintf(file, "%d ", bestQueenAg[0].isActive);
-    fprintf(file, "%d ", bestQueenAg[1].isActive);
-    fprintf(file, "| ");
-    fprintf(file, "%d ", bestQueenAg[2].isActive);
-    fprintf(file, "%d ", bestQueenAg[3].isActive);
-    fprintf(file, "%d ", bestQueenAg[4].isActive);
-    fprintf(file, "| ");
-    fprintf(file, "%d ", bestQueenAg[5].isActive);
-    fprintf(file, "%d ", bestQueenAg[6].isActive);
-    fprintf(file, "%d ", bestQueenAg[7].isActive);
-    fprintf(file, "| ");
-    fprintf(file, "%d ", bestQueenAg[8].isActive);
-    fprintf(file, "%d ", bestQueenAg[9].isActive);
-    fprintf(file, "|| %d ", bestQueenAg[0].mutationPower);
-    fprintf(file, "%d ", bestQueenAg[1].mutationPower);
-    fprintf(file, "| ");
-    fprintf(file, "%d ", bestQueenAg[2].mutationPower);
-    fprintf(file, "%d ", bestQueenAg[3].mutationPower);
-    fprintf(file, "%d ", bestQueenAg[4].mutationPower);
-    fprintf(file, "%d ", bestQueenAg[5].mutationPower);
-    fprintf(file, "| ");
-    fprintf(file, "%d ", bestQueenAg[6].mutationPower);
-    fprintf(file, "%d ", bestQueenAg[7].mutationPower);
-    fprintf(file, "%d ", bestQueenAg[8].mutationPower);
-    fprintf(file, "| ");
-    fprintf(file, "%d ", bestQueenAg[9].mutationPower);
+    // fprintf(file, "%d ", bestQueenAg[0].isActive);
+    // fprintf(file, "%d ", bestQueenAg[1].isActive);
+    // fprintf(file, "| ");
+    // fprintf(file, "%d ", bestQueenAg[2].isActive);
+    // fprintf(file, "%d ", bestQueenAg[3].isActive);
+    // fprintf(file, "%d ", bestQueenAg[4].isActive);
+    // fprintf(file, "| ");
+    // fprintf(file, "%d ", bestQueenAg[5].isActive);
+    // fprintf(file, "%d ", bestQueenAg[6].isActive);
+    // fprintf(file, "%d ", bestQueenAg[7].isActive);
+    // fprintf(file, "| ");
+    // fprintf(file, "%d ", bestQueenAg[8].isActive);
+    // fprintf(file, "%d ", bestQueenAg[9].isActive);
+    // fprintf(file, "|| %d ", bestQueenAg[0].mutationPower);
+    // fprintf(file, "%d ", bestQueenAg[1].mutationPower);
+    // fprintf(file, "| ");
+    // fprintf(file, "%d ", bestQueenAg[2].mutationPower);
+    // fprintf(file, "%d ", bestQueenAg[3].mutationPower);
+    // fprintf(file, "%d ", bestQueenAg[4].mutationPower);
+    // fprintf(file, "%d ", bestQueenAg[5].mutationPower);
+    // fprintf(file, "| ");
+    // fprintf(file, "%d ", bestQueenAg[6].mutationPower);
+    // fprintf(file, "%d ", bestQueenAg[7].mutationPower);
+    // fprintf(file, "%d ", bestQueenAg[8].mutationPower);
+    // fprintf(file, "| ");
+    // fprintf(file, "%d ", bestQueenAg[9].mutationPower);
     fprintf(file, "\n");
     fclose(file);
 }
 
 void saveBestQueenAgToFile()
 {
-    // generation, score, ag
+    // generation,, ag
     // printf("SAVING BEST QUEEN AG TO FILE\n");
     FILE *file = fopen(BEST_QUEEN_AG, "a");
-    fprintf(file, "%d, %d, ", queenAgGeneration, bestQueenAgScore);
+    fprintf(file, "%d, %lld, ", queenAgGeneration, bestQueenAgScore);
     fprintf(file, "%d ", bestQueenAg[0].isActive);
     fprintf(file, "%d ", bestQueenAg[1].isActive);
     fprintf(file, "| ");

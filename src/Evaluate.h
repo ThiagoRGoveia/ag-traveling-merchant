@@ -2,7 +2,7 @@
 #define EVALUATE_H_
 
 int evaluate();
-int calculateTotalDistance(int *array);
-int getDistance(int A, int B);
+long long int calculateTotalDistance(int *array);
+long int getDistance(int A, int B);
 
 #endif
