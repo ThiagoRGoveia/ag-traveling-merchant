@@ -6,6 +6,8 @@ Este trabalho apresenta um algoritmo proposto para resolver o problema do caixei
 
 ## Video
 
+[Apresentação](https://www.youtube.com/watch?v=298OwnPm0lQ)
+
 ## Setup
 Definir a constante NUM_NODES para o número de nós do seu grafo
 
